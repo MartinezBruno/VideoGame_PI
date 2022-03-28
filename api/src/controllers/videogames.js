@@ -35,7 +35,7 @@ const getAll = async (req, res, next) => {
                   `https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`,
                )
             ).data.results
-            console.log('acaaa2')
+
             let apiResponse = apiGames.map(v => {
                return {
                   id: v.id,
@@ -114,11 +114,9 @@ const postVideogame = async (req, res, next) => {
          released,
          rating,
          platforms,
-         genres,
       })
       let dbGenre = await Genre.findAll({where: {name: genres}})
-      newVideoGame.addGenres(dbGenre)
-
+      newVideoGame.addGenre(dbGenre)
       res.status(201).send(newVideoGame)
    } catch (error) {
       next(error)

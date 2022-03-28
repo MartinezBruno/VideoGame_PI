@@ -26,7 +26,7 @@ const getApiGames = async () => {
 
       gamesFromApi = gamesFromApi.concat(gameData)
    }
-   console.log(gamesFromApi.length)
+   // console.log(gamesFromApi.length, 'Juegos desde la api')
    return gamesFromApi
 }
 

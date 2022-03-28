@@ -3,7 +3,7 @@ const {Genre} = require('../db')
 const {API_KEY} = process.env
 const apiGenresUrl = `https://api.rawg.io/api/genres?key=${API_KEY}`
 
-const getApiGenres = async (req, res) => {
+const getGenres = async (req, res) => {
    try {
       let genresFromApi = (await axios.get(apiGenresUrl)).data.results
       let genres = genresFromApi.map(g => {
@@ -25,19 +25,6 @@ const getApiGenres = async (req, res) => {
    }
 }
 
-const newGenre = async (req, res) => {
-   const {genre} = req.body
-   try {
-      const newGenre = await Genre.create({
-         name: genre,
-      })
-      res.json(newGenre)
-   } catch (error) {
-      console.log(error)
-   }
-}
-
 module.exports = {
-   getApiGenres,
-   newGenre,
+   getGenres,
 }
