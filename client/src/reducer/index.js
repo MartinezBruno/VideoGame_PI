@@ -2,6 +2,11 @@ const initialState = {
    videogames: [],
    allVideogames: [],
    genres: [],
+   videogameDetail: [],
+   loading: {
+      loading: false,
+      message: '',
+   },
 }
 
 function rootReducer(state = initialState, {type, payload}) {
@@ -11,22 +16,42 @@ function rootReducer(state = initialState, {type, payload}) {
             ...state,
             videogames: payload,
             allVideogames: payload,
+            videogameDetail: [],
+            loading: {
+               loading: false,
+               msg: '',
+            },
+         }
+      case 'GET_VIDEOGAME_DETAILS':
+         return {
+            ...state,
+            videogameDetail: payload,
+            videogames: [],
+            allVideogames: [],
+            loading: {
+               loading: false,
+               msg: '',
+            },
          }
       case 'GET_GENRES':
          return {
             ...state,
             genres: payload,
+            loading: {
+               loading: false,
+               msg: '',
+            },
          }
-      case 'FILTER_BY_API_OR_DB':
-         const allVideogames = state.allVideogames
+      case 'FILTER_BY_API_OR_DB': 
+         const allVideogames = state.allVideogames 
          const filteredVideogames =
             payload === 'created'
                ? allVideogames.filter(game => game.createdOnDb)
-               : allVideogames.filter(game => typeof game.id === 'number')
+               : allVideogames.filter(game => typeof game.id === 'number') 
          return {
-            ...state,
+            ...state, 
             videogames:
-               payload === 'all' ? state.allVideogames : filteredVideogames,
+               payload === 'all' ? state.allVideogames : filteredVideogames, 
          }
       case 'ORDER':
          let orderedGames
@@ -58,7 +83,6 @@ function rootReducer(state = initialState, {type, payload}) {
                return 0
             })
          }
-
          return {
             ...state,
             videogames: orderedGames,
@@ -77,6 +101,14 @@ function rootReducer(state = initialState, {type, payload}) {
          return {
             ...state,
             videogames: filteredGames,
+         }
+      case 'LOADING_VIDEOGAMES':
+         return {
+            ...state,
+            loading: {
+               loading: true,
+               message: payload,
+            },
          }
       default:
          return state
