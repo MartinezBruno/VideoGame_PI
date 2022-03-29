@@ -1,6 +1,7 @@
 const initialState = {
    videogames: [],
    allVideogames: [],
+   genres: [],
 }
 
 function rootReducer(state = initialState, {type, payload}) {
@@ -10,6 +11,11 @@ function rootReducer(state = initialState, {type, payload}) {
             ...state,
             videogames: payload,
             allVideogames: payload,
+         }
+      case 'GET_GENRES':
+         return {
+            ...state,
+            genres: payload,
          }
       case 'FILTER_BY_API_OR_DB':
          const allVideogames = state.allVideogames
@@ -56,6 +62,21 @@ function rootReducer(state = initialState, {type, payload}) {
          return {
             ...state,
             videogames: orderedGames,
+         }
+      case 'FILTER_BY_GENRE':
+         const allGames = state.allVideogames
+         const dbFilter = allGames.filter(game =>
+            game.genres.find(g => (g.name === payload ? game : null)),
+         )
+         console.log(dbFilter)
+         const apiFilter = allGames.filter(game =>
+            game.genres.includes(payload),
+         )
+         const filteredGames =
+            payload === 'All' ? allGames : apiFilter.concat(dbFilter)
+         return {
+            ...state,
+            videogames: filteredGames,
          }
       default:
          return state
