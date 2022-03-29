@@ -1,12 +1,13 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getVideogames, order} from '../../actions'
+import {getVideogames, getGenres, order} from '../../actions'
 import NavBar from '../NavBar/NavBar'
 import Card from '../Card/Card'
 import Paged from '../Paged/Paged'
 
 import FilterAPIorDB from '../Filters/FilterAPIorDB'
+import FilterGenres from '../Filters/FilterGenres'
 
 function Home() {
    const dispatch = useDispatch() //Dispatch para ejecutar las acciones
@@ -17,7 +18,7 @@ function Home() {
    const indexOfFirstGame = indexOfLastGame - gamesPerPage //0 (Seteo indice del primer videojuego)
 
    const currentGames = allVideoGames.slice(indexOfFirstGame, indexOfLastGame) //Seteo los videojuegos que se van a mostrar
-   console.log(currentGames)
+   // console.log(currentGames)
    const paged = pageNumber => {
       setCurrentPage(pageNumber) //Seteo la pagina actual
    }
@@ -25,6 +26,7 @@ function Home() {
    useEffect(
       () => {
          dispatch(getVideogames()) //Ejecuto la accion
+         dispatch(getGenres())
       },
       [dispatch], //siempre que cambie el dispatch
    )
@@ -65,6 +67,7 @@ function Home() {
                   <option value="descA">Z/A</option>
                </select>
                <FilterAPIorDB />
+               <FilterGenres />
             </div>
             <Paged
                gamesPerPage={gamesPerPage}
