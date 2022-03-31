@@ -47,7 +47,7 @@ function Detail() {
                {gameDetail.platforms ? (
                   gameDetail.platforms.map((plat, index) => (
                      <div key={index}>
-                        <p>{plat.toUpperCase()}</p>
+                        <p>{plat}</p>
                      </div>
                   ))
                ) : (

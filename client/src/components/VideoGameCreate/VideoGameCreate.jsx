@@ -1,37 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { getGenres, platformsOptions, postVideoGame } from '../../actions'
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {Link, useHistory} from 'react-router-dom'
+import {getGenres, postVideoGame, getVideogames} from '../../actions'
 
 const validation = input => {
    let errors = {}
-   if (!input.name) {
-      errors.name = 'Name is required'
-   }
-   if (!input.description) {
-      errors.description = 'Description is required'
-   }
-   if (!input.released) {
-      errors.released = 'Released is required'
-   }
-   if (!input.rating) {
-      errors.rating = 'Rating is required'
-   }
-   return errors
-}
+   if (!input.name) errors.name = 'Name is required'
+   else if (!input.description) errors.description = 'Description is required'
+   else if (!input.released) errors.released = 'Released is required'
+   else if (!input.rating) errors.rating = 'Rating is required'
+   else if (!input.platforms) errors.platforms = 'Platforms is required'
+   else if (!input.genres) errors.genres = 'Genres is required'
 
-const deleteCheckbox = (input, check) => {
-   if (input.includes(check)) {
-      let arr = input.filter(item => item !== check)
-      return arr
-   } else {
-      let arr = input.concat(check)
-      return arr
-   }
+   return errors
 }
 
 function VideoGameCreate() {
    const dispatch = useDispatch()
+   const history = useHistory()
    const genres = useSelector(state => state.genres)
    const [errors, setErrors] = useState({})
    const [input, setInput] = useState({
@@ -42,31 +28,37 @@ function VideoGameCreate() {
       genres: [],
       platforms: [],
    })
+   const allVideoGames = useSelector(state => state.allVideogames)
+   const allPlatforms = allVideoGames.map(p => p.platforms)
+   const platforms = [...new Set(allPlatforms.flat())]
 
-   const handlePlatforms = e => {
+   const handleAddPlatform = e => {
+      setInput({...input, platforms: [...input.platforms, e.target.value]})
+      setErrors(validation({...input}))
+   }
+   const handleRemovePlatform = e => {
+      e.preventDefault()
       setInput({
          ...input,
-         platforms: deleteCheckbox(input.platforms, e.target.value),
+         platforms: input.platforms.filter(p => p !== e.target.name),
       })
-      setErrors(
-         validation({
-            ...input,
-            platforms: e.target.value,
-         }),
-      )
    }
-   const handleGenres = e => {
+   const handleAddGenre = e => {
       setInput({
          ...input,
-         genres: deleteCheckbox(input.genres, e.target.value),
+         genres: [...input.genres, e.target.value],
       })
-      setErrors(
-         validation({
-            ...input,
-            genres: e.target.value,
-         }),
-      )
+      setErrors(validation({...input}))
    }
+   const handleRemoveGenre = e => {
+      e.preventDefault()
+      setInput({
+         ...input,
+         genres: input.genres.filter(g => g !== e.target.name),
+      })
+      setErrors(validation({...input}))
+   }
+
    const handleOnChange = e => {
       setInput({
          ...input,
@@ -82,18 +74,20 @@ function VideoGameCreate() {
    const handleSubmit = e => {
       e.preventDefault()
       dispatch(postVideoGame(input))
-      alert('Video Game Created! \n Vuelve al inicio para ver los cambios')
       setInput({
          name: '',
          description: '',
          released: '',
-         rating: 0,
+         rating: '',
          genres: [],
          platforms: [],
       })
+      alert('Video Game Created!\nVuelve al inicio para ver los cambios')
+      history.push('/home')
    }
    useEffect(() => {
       dispatch(getGenres())
+      dispatch(getVideogames())
    }, [dispatch])
 
    return (
@@ -147,36 +141,46 @@ function VideoGameCreate() {
                {errors.released && <p className="error">{errors.released}</p>}
             </div>
             <div>
-               <h3>Platforms</h3>
-               <div>
-                  {platformsOptions.map(platform => (
-                     <div key={platform.id}>
-                        <input
-                           type="checkbox"
-                           value={platform.name}
-                           onChange={e => handlePlatforms(e)}
-                        />
-                        {platform.name}
-                     </div>
-                  ))}
-                  {errors.platforms && <p>{errors.platforms}</p>}
-               </div>
+               <select defaultValue={''} onChange={handleAddPlatform}>
+                  <option value="" disabled>
+                     Select a platform
+                  </option>
+                  {platforms.map(p => {
+                     return (
+                        <option key={p} value={p}>
+                           {p}
+                        </option>
+                     )
+                  })}
+               </select>
+               {input.platforms.map(p => (
+                  <button key={p} onClick={handleRemovePlatform} name={p}>
+                     {p}
+                     <span> X</span>
+                  </button>
+               ))}
+               {errors.platforms && <p className="error">{errors.platforms}</p>}
             </div>
             <div>
-               <h3>Genres</h3>
-               <div>
-                  {genres.map(genre => (
-                     <div key={genre.id}>
-                        <input
-                           type="checkbox"
-                           value={genre.name}
-                           onChange={e => handleGenres(e)}
-                        />
-                        {genre.name}
-                     </div>
-                  ))}
-                  {errors.genres && <p>{errors.genres}</p>}
-               </div>
+               <select defaultValue={''} onChange={e => handleAddGenre(e)}>
+                  <option value="" disabled>
+                     Select a genre
+                  </option>
+                  {genres.map(g => {
+                     return (
+                        <option key={g.name} value={g.name}>
+                           {g.name}
+                        </option>
+                     )
+                  })}
+               </select>
+               {input.genres.map(g => (
+                  <button key={g} onClick={e => handleRemoveGenre(e)} name={g}>
+                     {g}
+                     <span>X</span>
+                  </button>
+               ))}
+               {errors.genres && <p className="error">{errors.genres}</p>}
             </div>
             <div>
                <label htmlFor="description" className="label-form">

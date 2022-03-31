@@ -18,7 +18,7 @@ const getApiGames = async () => {
             released: el.released,
             image: el.background_image,
             rating: el.rating,
-            platforms: el.platforms.map(p => p.platform.name.toLowerCase()),
+            platforms: el.platforms.map(p => p.platform.name),
             genres: el.genres.map(g => g.name),
          }
       })
