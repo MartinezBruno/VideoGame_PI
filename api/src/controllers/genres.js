@@ -22,7 +22,7 @@ const getGenres = async (req, res) => {
       })
       res.json(genres)
    } catch (error) {
-      next(error)
+      console.log(error)
    }
 }
 
