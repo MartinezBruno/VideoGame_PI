@@ -5,7 +5,8 @@ const apiGenresUrl = `https://api.rawg.io/api/genres?key=${API_KEY}`
 
 const getGenres = async (req, res) => {
    try {
-      let genresFromApi = (await axios.get(apiGenresUrl)).data.results
+      let genresFromApi = await axios.get(apiGenresUrl)
+      genresFromApi = genresFromApi.data.results
       let genres = genresFromApi.map(g => {
          return {
             id: g.id,
@@ -21,7 +22,7 @@ const getGenres = async (req, res) => {
       })
       res.json(genres)
    } catch (error) {
-      console.log(error)
+      next(error)
    }
 }
 

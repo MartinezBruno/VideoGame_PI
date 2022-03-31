@@ -40,12 +40,12 @@ const getAll = async (req, res, next) => {
                return {
                   id: v.id,
                   name: v.name,
-                  description: v.description,
+                  description: v.description_raw,
                   image: v.background_image,
                   released: v.released,
                   rating: v.rating,
-                  platforms: v.platforms.map(p => p.platform.name),
-                  genres: v.genres.map(g => g.name),
+                  platforms: v.platforms?.map(p => p.platform.name),
+                  genres: v.genres?.map(g => g.name),
                }
             })
             return res.status(200).json(apiResponse)
@@ -67,29 +67,30 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
    const {id} = req.params
    let numeric = /^[0-9]+$/ //Uso para verificar que la id contenga solo valores numericos
+   let idGame = id
    if (numeric.test(id)) {
       try {
          const apiResponse = await axios.get(
             `https://api.rawg.io/api/games/${id}?key=${API_KEY}`,
          )
-         let apiGame = {
+         idGame = {
             id: apiResponse.data.id,
             name: apiResponse.data.name,
-            description: apiResponse.data.description,
+            description: apiResponse.data.description_raw,
             image: apiResponse.data.background_image,
             released: apiResponse.data.released,
             rating: apiResponse.data.rating,
-            platforms: apiResponse.data.platforms.map(p => p.platform.name),
-            genres: apiResponse.data.genres.map(g => g.name),
+            platforms: apiResponse.data.platforms?.map(p => p.platform.name),
+            genres: apiResponse.data.genres?.map(g => g.name),
          }
-         res.status(200).send(apiGame)
+         res.status(200).send(idGame)
       } catch (error) {
          next(error)
       }
    } else {
       try {
          const dbResponse = await Videogame.findByPk(id, {include: Genre})
-         let dbGame = {
+         idGame = {
             id: dbResponse.id,
             name: dbResponse.name,
             description: dbResponse.description,
@@ -98,7 +99,7 @@ const getById = async (req, res, next) => {
             platforms: dbResponse.platforms,
             genres: dbResponse.genres.map(g => g.name),
          }
-         res.status(200).send(dbGame)
+         res.status(200).json(idGame)
       } catch (error) {
          res.status(404).send({msg: 'ID Game not found'})
       }
@@ -117,6 +118,7 @@ const postVideogame = async (req, res, next) => {
       })
       let dbGenre = await Genre.findAll({where: {name: genres}})
       newVideoGame.addGenre(dbGenre)
+      // res.send({msg: 'Videogame created'})
       res.status(201).send(newVideoGame)
    } catch (error) {
       next(error)
