@@ -10,6 +10,7 @@ function FilterGenres() {
    const [, setFilterByGenre] = useState('')
 
    const handleGenre = e => {
+      e.preventDefault()
       dispatch(filterByGenre(e.target.value))
       setCurrentPage(1)
       setFilterByGenre('FilterByGenre' + e.target.value)
@@ -21,20 +22,19 @@ function FilterGenres() {
                Filtrar por generos
             </option>
             <option value="All">All</option>
-            {genres &&
-               genres
-                  .sort((a, b) => {
-                     if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-                     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-                     return 0
-                  })
-                  .map(genre => {
-                     return (
-                        <option value={genre.name} key={genre.id}>
-                           {genre.name}
-                        </option>
-                     )
-                  })}
+            {genres
+               ?.sort((a, b) => {
+                  if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
+                  if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+                  return 0
+               })
+               .map(genre => {
+                  return (
+                     <option value={genre.name} key={genre.id}>
+                        {genre.name}
+                     </option>
+                  )
+               })}
          </select>
       </div>
    )

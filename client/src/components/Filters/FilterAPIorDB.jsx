@@ -5,12 +5,11 @@ import {filterByApiOrDb} from '../../actions'
 function FilterAPIorDB() {
    const dispatch = useDispatch()
    const handleChange = e => {
-      e.preventDefault()
       dispatch(filterByApiOrDb(e.target.value))
    }
    return (
       <div>
-         <select value={''} onChange={e => handleChange(e)}>
+         <select defaultValue={''} onChange={e => handleChange(e)}>
             <option value="" disabled>
                Filter by DB/API
             </option>

@@ -17,10 +17,8 @@ function NavBar() {
    return (
       <div>
          <Link to="/videogame">Crear Videojuego</Link>
-         <h1>Aguante boquita papá</h1>
-         <button onClick={e => handleOnClick(e)}>
-            Volver a cargar los videojuegos
-         </button>
+         <h1>Videogames SPA</h1>
+         <button onClick={e => handleOnClick(e)}>Reload</button>
          <SearchBar />
       </div>
    )
