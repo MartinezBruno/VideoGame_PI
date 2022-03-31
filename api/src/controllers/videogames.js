@@ -1,7 +1,9 @@
 const {Videogame, Genre} = require('../db')
+const {API_KEY} = process.env
 const axios = require('axios')
 const {getAllGames} = require('./utils')
-const {API_KEY} = process.env
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 //Obtengo todos los videojuegos o busco uno si se pasa el name
 const getAll = async (req, res, next) => {
@@ -10,7 +12,9 @@ const getAll = async (req, res, next) => {
       if (name) {
          const dbGames = await Videogame.findAll({
             where: {
-               name: name,
+               name: {
+                  [Op.like]: `%${name}%`,
+               },
             },
             include: {
                model: Genre,
@@ -40,7 +44,6 @@ const getAll = async (req, res, next) => {
                return {
                   id: v.id,
                   name: v.name,
-                  description: v.description_raw,
                   image: v.background_image,
                   released: v.released,
                   rating: v.rating,

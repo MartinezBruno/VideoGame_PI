@@ -16,7 +16,6 @@ const getApiGames = async () => {
             id: el.id,
             name: el.name,
             released: el.released,
-            description: el.description_raw,
             image: el.background_image,
             rating: el.rating,
             platforms: el.platforms.map(p => p.platform.name.toLowerCase()),
