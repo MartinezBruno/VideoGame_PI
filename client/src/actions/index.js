@@ -38,7 +38,7 @@ export const searchGameByName = name => async dispatch => {
 
 export const getVideogameDetails = id => async dispatch => {
    try {
-      var json = await axios.get(`/videogames/${id}`)
+      var json = await axios.get(`/videogame/${id}`)
       // console.log(json.data, 'videogame details')
       return dispatch({
          type: 'GET_VIDEOGAME_DETAILS',
@@ -100,7 +100,7 @@ export const filterByGenre = payload => async dispatch => {
 
 export const postVideoGame = videogame => async dispatch => {
    try {
-      let newVideoGame = await axios.post('/videogames', videogame)
+      let newVideoGame = await axios.post('/videogame', videogame)
       return dispatch({
          type: 'POST_VIDEOGAME',
          payload: newVideoGame.data,
