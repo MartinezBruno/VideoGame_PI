@@ -1,25 +1,29 @@
 import React from 'react'
-import {useDispatch} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getVideogames} from '../../actions'
+import FilterAPIorDB from '../Filters/FilterAPIorDB'
+import FilterGenres from '../Filters/FilterGenres'
 import SearchBar from '../SearchBar/SearchBar'
 
-function NavBar() {
-   const dispatch = useDispatch()
-
-   let handleOnClick = e => {
-      e.preventDefault()
-      dispatch(getVideogames())
-   }
-
+function NavBar({order, refresh, setCurrentPage}) {
    return (
       <div>
          <Link to="/videogame" style={{textDecoration: 'none'}}>
             Crear Videojuego
          </Link>
          <h1>Videogames SPA</h1>
-         <button onClick={e => handleOnClick(e)}>Reload</button>
          <SearchBar />
+         <button onClick={refresh}>Reload</button>
+         <FilterAPIorDB />
+         <FilterGenres />
+         <select defaultValue={''} onChange={order}>
+            <option value="" disabled>
+               Order By:
+            </option>
+            <option value="ascA">Ascendente</option>
+            <option value="descA">Descendente</option>
+            <option value="ascR">Rating +</option>
+            <option value="descR">Rating -</option>
+         </select>
       </div>
    )
 }

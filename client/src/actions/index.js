@@ -76,7 +76,7 @@ export const filterByApiOrDb = payload => async dispatch => {
    }
 }
 
-export const order = payload => async dispatch => {
+export const orderBy = payload => async dispatch => {
    try {
       dispatch({
          type: 'ORDER',
@@ -110,3 +110,8 @@ export const postVideoGame = videogame => async dispatch => {
    }
 }
 
+export const LoaderToTrue = () => dispatch => {
+   dispatch({
+      type: 'LOADING',
+   })
+}

@@ -1,9 +1,10 @@
 const initialState = {
    videogames: [],
    allVideogames: [],
-   videogameDetail: [],
    videogameSearched: [],
+   videogameDetail: [], 
    genres: [],
+   loading: true,
 }
 
 function rootReducer(state = initialState, {type, payload}) {
@@ -13,20 +14,21 @@ function rootReducer(state = initialState, {type, payload}) {
             ...state,
             videogames: payload,
             allVideogames: payload,
-            videogameDetail: [],
-            videogameSearched: [],
+            loading: false,
          }
       case 'SEARCH_VIDEOGAME':
          return {
             ...state,
+            videogames: payload,
+            allVideogames: payload,
             videogameSearched: payload,
+            loading: false,
          }
       case 'GET_VIDEOGAME_DETAILS':
          return {
             ...state,
             videogameDetail: payload,
-            videogames: [],
-            allVideogames: [],
+            loading: false,
          }
       case 'POST_VIDEOGAME':
          return {
@@ -38,10 +40,6 @@ function rootReducer(state = initialState, {type, payload}) {
          return {
             ...state,
             genres: payload,
-            loading: {
-               loading: false,
-               message: '',
-            },
          }
       case 'FILTER_BY_API_OR_DB':
          const allVideogames = state.allVideogames
@@ -99,6 +97,12 @@ function rootReducer(state = initialState, {type, payload}) {
             ...state,
             videogames: filteredGames,
          }
+      case 'LOADING': {
+         return {
+            ...state,
+            loading: true,
+         }
+      }
       default:
          return state
    }
