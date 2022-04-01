@@ -20,39 +20,39 @@ const getAll = async (req, res, next) => {
                model: Genre,
             },
          })
-         if (dbGames.length !== 0) {
-            let dbResponse = dbGames.map(v => {
-               return {
-                  id: v.id,
-                  name: v.name,
-                  description: v.description,
-                  released: v.released,
-                  rating: v.rating,
-                  platforms: v.platforms,
-                  genres: v.genres.map(g => g.name),
-               }
-            })
-            res.status(200).send(dbResponse)
-         } else {
-            const apiGames = (
-               await axios.get(
-                  `https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`,
-               )
-            ).data.results
 
-            let apiResponse = apiGames.map(v => {
-               return {
-                  id: v.id,
-                  name: v.name,
-                  image: v.background_image,
-                  released: v.released,
-                  rating: v.rating,
-                  platforms: v.platforms?.map(p => p.platform.name),
-                  genres: v.genres?.map(g => g.name),
-               }
-            })
-            return res.status(200).json(apiResponse)
-         }
+         let dbResponse = dbGames.map(v => {
+            return {
+               id: v.id,
+               name: v.name,
+               description: v.description,
+               released: v.released,
+               rating: v.rating,
+               platforms: v.platforms,
+               genres: v.genres.map(g => g.name),
+            }
+         })
+
+         const apiGames = (
+            await axios.get(
+               `https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`,
+            )
+         ).data.results
+
+         let apiResponse = apiGames.map(v => {
+            return {
+               id: v.id,
+               name: v.name,
+               image: v.background_image,
+               released: v.released,
+               rating: v.rating,
+               platforms: v.platforms?.map(p => p.platform.name),
+               genres: v.genres?.map(g => g.name),
+            }
+         })
+         let response = dbResponse.concat(apiResponse).splice(0, 15)
+         console.log(response.length)
+         return res.status(200).send(response)
       } else {
          try {
             const allGames = await getAllGames()
