@@ -2,7 +2,7 @@ const initialState = {
    videogames: [],
    allVideogames: [],
    videogameSearched: [],
-   videogameDetail: [], 
+   videogameDetail: [],
    genres: [],
    loading: true,
 }
@@ -14,6 +14,7 @@ function rootReducer(state = initialState, {type, payload}) {
             ...state,
             videogames: payload,
             allVideogames: payload,
+            videogameDetail: [],
             loading: false,
          }
       case 'SEARCH_VIDEOGAME':
@@ -28,6 +29,9 @@ function rootReducer(state = initialState, {type, payload}) {
          return {
             ...state,
             videogameDetail: payload,
+            videogames: [],
+            allVideogames: [],
+            videogameSearched: [],
             loading: false,
          }
       case 'POST_VIDEOGAME':
@@ -49,8 +53,7 @@ function rootReducer(state = initialState, {type, payload}) {
                : allVideogames.filter(game => typeof game.id === 'number')
          return {
             ...state,
-            videogames:
-               payload === 'all' ? state.allVideogames : filteredVideogames,
+            videogames: payload === 'all' ? state.allVideogames : filteredVideogames,
          }
       case 'ORDER':
          let orderedGames
@@ -84,15 +87,10 @@ function rootReducer(state = initialState, {type, payload}) {
          }
       case 'FILTER_BY_GENRE':
          const allGames = state.allVideogames
-         const dbFilter = allGames.filter(game =>
-            game.genres.find(g => (g.name === payload ? game : null)),
-         )
+         const dbFilter = allGames.filter(game => game.genres.find(g => (g.name === payload ? game : null)))
          console.log(dbFilter)
-         const apiFilter = allGames.filter(game =>
-            game.genres.includes(payload),
-         )
-         const filteredGames =
-            payload === 'All' ? allGames : apiFilter.concat(dbFilter)
+         const apiFilter = allGames.filter(game => game.genres.includes(payload))
+         const filteredGames = payload === 'All' ? allGames : apiFilter.concat(dbFilter)
          return {
             ...state,
             videogames: filteredGames,

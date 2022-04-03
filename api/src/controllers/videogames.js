@@ -79,7 +79,7 @@ const getById = async (req, res, next) => {
          idGame = {
             id: apiResponse.data.id,
             name: apiResponse.data.name,
-            description: apiResponse.data.description_raw,
+            description: apiResponse.data.description,
             image: apiResponse.data.background_image,
             released: apiResponse.data.released,
             rating: apiResponse.data.rating,
