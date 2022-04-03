@@ -1,0 +1,33 @@
+.container {
+   background-image: url(../Images/home.png);
+   /* padding: 0 75px;
+   display: grid;
+   grid-template-columns: 0.3fr 0.7fr;
+   grid-gap: 20px; */
+}
+
+/* .cards {
+   display: grid;
+   grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+   gap: 5x;
+   margin-bottom: 10px;
+   @media only screen and (max-width: 600px) {
+      display: block;
+   }
+} */
+/* .cards {
+   display: grid;
+   padding: 5px;
+   align-content: space-around;
+   -ms-grid-column-align: center;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: 1fr 1fr 1fr 1fr;
+   grid-gap: 20px;
+   justify-content: start;
+   align-content: center;
+} */
+.cards {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}

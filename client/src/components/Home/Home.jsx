@@ -6,6 +6,7 @@ import Loader from '../Loader/Loader'
 import NavBar from '../NavBar/NavBar'
 import Paged from '../Paged/Paged'
 import imgNotFound from '../Images/img-not-found.jpg'
+import './Home.css'
 
 function Home() {
    const dispatch = useDispatch() //Dispatch para ejecutar las acciones
@@ -17,7 +18,7 @@ function Home() {
    const indexOfFirstGame = indexOfLastGame - gamesPerPage //0 (Seteo indice del primer videojuego)
 
    const currentGames = allVideoGames.slice(indexOfFirstGame, indexOfLastGame) //Seteo los videojuegos que se van a mostrar
-  
+
    // console.log(currentGames)
    const paged = pageNumber => {
       setCurrentPage(pageNumber) //Seteo la pagina actual
@@ -54,7 +55,7 @@ function Home() {
    )
 
    return (
-      <>
+      <div className="container">
          <NavBar
             order={handleOrder}
             refresh={handleRefresh}
@@ -71,23 +72,25 @@ function Home() {
                         allVideoGames={allVideoGames.length}
                         paged={paged}
                      />
-                     {currentGames.map(game => (
-                        <Card
-                           key={game.id}
-                           id={game.id}
-                           image={game.image ? game.image : imgNotFound}
-                           name={game.name}
-                           genres={
-                              game.createdOnDb
-                                 ? game.genres.map((genre, index) => (
-                                      <li key={index}>{genre.name}</li>
-                                   ))
-                                 : game.genres.map((genre, index) => (
-                                      <li key={index}>{genre}</li>
-                                   ))
-                           }
-                        />
-                     ))}
+                     <div className="cards">
+                        {currentGames.map(game => (
+                           <Card
+                              key={game.id}
+                              id={game.id}
+                              image={game.image ? game.image : imgNotFound}
+                              name={game.name}
+                              genres={
+                                 game.createdOnDb
+                                    ? game.genres.map((genre, index) => (
+                                         <li key={index}>{genre.name}</li>
+                                      ))
+                                    : game.genres.map((genre, index) => (
+                                         <li key={index}>{genre}</li>
+                                      ))
+                              }
+                           />
+                        ))}
+                     </div>
                      <Paged
                         gamesPerPage={gamesPerPage}
                         allVideoGames={allVideoGames.length}
@@ -99,7 +102,7 @@ function Home() {
                )}
             </>
          )}
-      </>
+      </div>
    )
 }
 
