@@ -8,7 +8,7 @@ function FilterAPIorDB() {
       dispatch(filterByApiOrDb(e.target.value))
    }
    return (
-      <div>
+      <div className="select">
          <select defaultValue={''} onChange={e => handleChange(e)}>
             <option value="" disabled>
                Filter by DB/API

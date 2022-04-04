@@ -1,11 +1,17 @@
 import React from 'react'
-import loading from '../Images/loading.gif'
+import './Loader.css'
 
 function Loader() {
    return (
-      <div>
-         <img src={loading} alt="loader" />
-         <h1>Loading...</h1>
+      <div className="spinner">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
       </div>
    )
 }

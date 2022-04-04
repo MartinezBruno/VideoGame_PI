@@ -1,0 +1,72 @@
+.form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.added {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.added button {
+   width: 9rem;
+}
+.form label {
+   display: block;
+   font-size: 1.2rem;
+   font-weight: 600;
+   text-align: left;
+}
+.form label,
+.form .select {
+   margin-top: 1.3rem;
+}
+.form input,
+.form select,
+.form textarea {
+   width: 15rem;
+   display: block;
+}
+.form textarea {
+   height: 10rem;
+}
+
+#send {
+   width: 140px;
+   height: 45px;
+   font-size: 23px;
+   cursor: pointer;
+   border: none;
+   outline: none;
+   background: transparent;
+   color: rgb(255, 0, 0);
+   font-family: 'Times New Roman', Times, serif;
+   font-weight: 700;
+   position: relative;
+   transition: all 0.5s;
+   z-index: 1;
+}
+
+#send::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 5px;
+   height: 100%;
+   background-color: rgb(0, 0, 0);
+   z-index: -1;
+   transition: all 0.5s;
+}
+
+#send:hover::before {
+   width: 100%;
+}
+
+#send:hover {
+   color: rgb(255, 255, 255);
+}
+
+#send:active:before {
+   background: #ff0000;
+}

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getGenres, getVideogames, LoaderToTrue, orderBy} from '../../actions'
 import Card from '../Card/Card'
+import imgNotFound from '../Images/img-not-found.jpg'
 import Loader from '../Loader/Loader'
 import NavBar from '../NavBar/NavBar'
 import Paged from '../Paged/Paged'
-import imgNotFound from '../Images/img-not-found.jpg'
 import './Home.css'
 
 function Home() {
@@ -56,22 +56,14 @@ function Home() {
 
    return (
       <div className="container">
-         <NavBar
-            order={handleOrder}
-            refresh={handleRefresh}
-            setCurrentPage={setCurrentPage}
-         />
+         <NavBar order={handleOrder} refresh={handleRefresh} setCurrentPage={setCurrentPage} />
          {loader ? (
             <Loader />
          ) : (
             <>
                {currentGames.length > 0 ? (
                   <div>
-                     <Paged
-                        gamesPerPage={gamesPerPage}
-                        allVideoGames={allVideoGames.length}
-                        paged={paged}
-                     />
+                     <Paged gamesPerPage={gamesPerPage} allVideoGames={allVideoGames.length} paged={paged} />
                      <div className="cards">
                         {currentGames.map(game => (
                            <Card
@@ -81,24 +73,16 @@ function Home() {
                               name={game.name}
                               genres={
                                  game.createdOnDb
-                                    ? game.genres.map((genre, index) => (
-                                         <li key={index}>{genre.name}</li>
-                                      ))
-                                    : game.genres.map((genre, index) => (
-                                         <li key={index}>{genre}</li>
-                                      ))
+                                    ? game.genres.map((genre, index) => <li key={index}>{genre.name}</li>)
+                                    : game.genres.map((genre, index) => <li key={index}>{genre}</li>)
                               }
                            />
                         ))}
                      </div>
-                     <Paged
-                        gamesPerPage={gamesPerPage}
-                        allVideoGames={allVideoGames.length}
-                        paged={paged}
-                     />
+                     <Paged gamesPerPage={gamesPerPage} allVideoGames={allVideoGames.length} paged={paged} />
                   </div>
                ) : (
-                  <div>Not Found</div>
+                  <h2 style={{color: 'white'}}>Not Found</h2>
                )}
             </>
          )}

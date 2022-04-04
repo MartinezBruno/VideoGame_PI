@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {Link, useHistory} from 'react-router-dom'
-import {getGenres, postVideoGame, getVideogames} from '../../actions'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { getGenres, getPlatforms, LoaderToTrue, postVideoGame } from '../../actions'
+import './VideoGameCreate.css'
 
 const validation = input => {
    let errors = {}
    if (!input.name) errors.name = 'Name is required'
-   else if (!input.description) errors.description = 'Description is required'
-   else if (!input.released) errors.released = 'Released is required'
-   else if (!input.rating) errors.rating = 'Rating is required'
-   else if (!input.platforms) errors.platforms = 'Platforms is required'
-   else if (!input.genres) errors.genres = 'Genres is required'
+   if (!input.description) errors.description = 'Description is required'
+   if (!input.released) errors.released = 'Released is required'
+   if (input.rating > 5) errors.rating = 'Rating must be less than 5'
+   if (input.rating < 0) errors.rating = 'Rating must be greater than 0'
+   if (input.platforms.length === 0) errors.platforms = 'Platforms is required'
+   if (!input.genres.length === 0) errors.genres = 'Genres is required'
 
    return errors
 }
@@ -19,25 +21,24 @@ function VideoGameCreate() {
    const dispatch = useDispatch()
    const history = useHistory()
    const genres = useSelector(state => state.genres)
+   const platforms = useSelector(state => state.platforms)
    const [errors, setErrors] = useState({})
    const [input, setInput] = useState({
       name: '',
       description: '',
       released: '',
-      rating: 0,
+      rating: '',
       genres: [],
       platforms: [],
    })
-   const allVideoGames = useSelector(state => state.allVideogames)
-   const allPlatforms = allVideoGames.map(p => p.platforms)
-   const platforms = [...new Set(allPlatforms.flat())]
-
    const handleAddPlatform = e => {
-      setInput({...input, platforms: [...input.platforms, e.target.value]})
-      setErrors(validation({...input}))
+      if (input.platforms.includes(e.target.value)) return
+      setInput({ ...input, platforms: [...input.platforms, e.target.value] })
+      setErrors(validation({ ...input }))
    }
    const handleRemovePlatform = e => {
       e.preventDefault()
+      console.log(e.target)
       setInput({
          ...input,
          platforms: input.platforms.filter(p => p !== e.target.name),
@@ -48,7 +49,7 @@ function VideoGameCreate() {
          ...input,
          genres: [...input.genres, e.target.value],
       })
-      setErrors(validation({...input}))
+      setErrors(validation({ ...input }))
    }
    const handleRemoveGenre = e => {
       e.preventDefault()
@@ -56,9 +57,8 @@ function VideoGameCreate() {
          ...input,
          genres: input.genres.filter(g => g !== e.target.name),
       })
-      setErrors(validation({...input}))
+      setErrors(validation({ ...input }))
    }
-
    const handleOnChange = e => {
       setInput({
          ...input,
@@ -82,16 +82,19 @@ function VideoGameCreate() {
          genres: [],
          platforms: [],
       })
-      alert('Video Game Created!\nVuelve al inicio para ver los cambios')
+      alert('Video Game Created!\nAhora serás redireccionado al inicio de la pagina')
       history.push('/home')
    }
    useEffect(() => {
       dispatch(getGenres())
-      dispatch(getVideogames())
+      dispatch(getPlatforms())
+      return () => {
+         dispatch(LoaderToTrue())
+      }
    }, [dispatch])
 
    return (
-      <div>
+      <div className="form">
          <div>
             <Link to="/home">
                <button>Home</button>
@@ -103,45 +106,48 @@ function VideoGameCreate() {
          <form onSubmit={e => handleSubmit(e)}>
             <div>
                <label htmlFor="name" className="label-form">
-                  Name
+                  Name:
                </label>
                <input
                   type="text"
                   id="name"
                   name="name"
                   value={input.value}
-                  onChange={e => handleOnChange(e)}
+                  onChange={handleOnChange}
+                  autoComplete="off"
                />
                {errors.name && <p className="error">{errors.name}</p>}
             </div>
             <div>
                <label htmlFor="rating" className="label-form">
-                  Rating
+                  Rating:
                </label>
                <input
                   type="number"
                   id="rating"
                   name="rating"
                   value={input.rating}
-                  onChange={e => handleOnChange(e)}
+                  onChange={handleOnChange}
+                  autoComplete="off"
                />
                {errors.rating && <p className="error">{errors.rating}</p>}
             </div>
             <div>
                <label htmlFor="released" className="label-form">
-                  Released
+                  Released:
                </label>
                <input
                   type="text"
                   id="released"
                   name="released"
                   value={input.released}
-                  onChange={e => handleOnChange(e)}
+                  onChange={handleOnChange}
+                  autoComplete="off"
                />
                {errors.released && <p className="error">{errors.released}</p>}
             </div>
             <div>
-               <select defaultValue={''} onChange={handleAddPlatform}>
+               <select className="select" defaultValue={''} onChange={handleAddPlatform}>
                   <option value="" disabled>
                      Select a platform
                   </option>
@@ -153,16 +159,17 @@ function VideoGameCreate() {
                      )
                   })}
                </select>
-               {input.platforms.map(p => (
-                  <button key={p} onClick={handleRemovePlatform} name={p}>
-                     {p}
-                     <span> X</span>
-                  </button>
-               ))}
+               <div className="added">
+                  {input.platforms?.map(p => (
+                     <button key={p} name={p} onClick={handleRemovePlatform}>
+                        {p}
+                     </button>
+                  ))}
+               </div>
                {errors.platforms && <p className="error">{errors.platforms}</p>}
             </div>
             <div>
-               <select defaultValue={''} onChange={e => handleAddGenre(e)}>
+               <select className="select" defaultValue={''} onChange={handleAddGenre}>
                   <option value="" disabled>
                      Select a genre
                   </option>
@@ -174,24 +181,26 @@ function VideoGameCreate() {
                      )
                   })}
                </select>
-               {input.genres.map(g => (
-                  <button key={g} onClick={e => handleRemoveGenre(e)} name={g}>
-                     {g}
-                     <span>X</span>
-                  </button>
-               ))}
+               <div className="added">
+                  {input.genres?.map(g => (
+                     <button key={g} name={g} onClick={handleRemoveGenre}>
+                        {g}
+                     </button>
+                  ))}
+               </div>
                {errors.genres && <p className="error">{errors.genres}</p>}
             </div>
             <div>
                <label htmlFor="description" className="label-form">
-                  Description
+                  Description:
                </label>
                <textarea
                   id="description"
                   name="description"
                   type="text"
                   value={input.description}
-                  onChange={e => handleOnChange(e)}
+                  onChange={handleOnChange}
+                  autoComplete="off"
                />
                {errors.description && <p>{errors.description}</p>}
             </div>
@@ -203,12 +212,12 @@ function VideoGameCreate() {
                !errors.platforms &&
                !errors.genres ? (
                   <div className="bn-container">
-                     <button className="bn31" type="submit">
+                     <button id="send" type="submit">
                         Create
                      </button>
                   </div>
                ) : (
-                  <h2 style={{color: 'red'}}>Campos obligatorios</h2>
+                  <h2 style={{ color: 'red' }}>Campos obligatorios</h2>
                )}
             </div>
          </form>

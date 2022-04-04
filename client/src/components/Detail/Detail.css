@@ -7,7 +7,6 @@
 .container-detail {
    width: 100%;
    height: 100vh;
-   /* background: #fff; */
    font-family: 'Times New Roman', Times, serif;
    display: flex;
    align-items: center;
@@ -19,7 +18,7 @@
    min-height: fit-content;
    background: #fff;
    padding: 20px;
-   box-shadow: 0 20px 60px #f55951bd;
+   box-shadow: 0 20px 60px #049bffae;
    border-radius: 25px;
 }
 
@@ -33,7 +32,6 @@
 .tarjeta-text h3 {
    text-align: right;
 }
-
 
 .descrpiton {
    text-align: left;

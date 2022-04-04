@@ -16,10 +16,10 @@ function FilterGenres() {
       setFilterByGenre('FilterByGenre' + e.target.value)
    }
    return (
-      <div>
+      <div className="select">
          <select defaultValue={''} onChange={e => handleGenre(e)}>
             <option value="" disabled>
-               Filtrar por generos
+               Filter by Genre:
             </option>
             <option value="All">All</option>
             {genres
