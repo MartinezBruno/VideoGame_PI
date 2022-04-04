@@ -16,7 +16,7 @@ export const getVideogames = () => dispatch => {
    axios
       .get('/videogames')
       .then(json => {
-         return dispatch({type: 'GET_VIDEOGAMES', payload: json.data})
+         return dispatch({ type: 'GET_VIDEOGAMES', payload: json.data })
       })
       .catch(error => {
          console.log(error)
@@ -59,7 +59,7 @@ export const getGenres = () => dispatch => {
    axios
       .get('/genres')
       .then(res => {
-         return dispatch({type: 'GET_GENRES', payload: res.data})
+         return dispatch({ type: 'GET_GENRES', payload: res.data })
       })
       .catch(error => console.log(error))
 }
@@ -109,7 +109,20 @@ export const postVideoGame = videogame => async dispatch => {
       console.log(error)
    }
 }
-
+export const getPlatforms = () => async dispatch => {
+   try {
+      let games = (await axios.get('/videogames')).data
+      let allPlatforms = games.map(p => p.platforms)
+      let platforms = [...new Set(allPlatforms.flat())]
+      console.log(platforms, 'platforms')
+      return dispatch({
+         type: 'GET_PLATFORMS',
+         payload: platforms,
+      })
+   } catch (error) {
+      console.log(error)
+   }
+}
 export const LoaderToTrue = () => dispatch => {
    dispatch({
       type: 'LOADING',
