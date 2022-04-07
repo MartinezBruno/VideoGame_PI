@@ -1,9 +1,17 @@
 .nav {
    display: flex;
    flex-direction: row-reverse;
-   justify-content: space-around;
-   align-content: center;
+   justify-content: space-evenly;
    margin: 3rem;
+}
+.searchForm input,
+.searchForm button,
+.nav-bar select,
+.nav button {
+   background-color: #212121;
+   color: white;
+   font-size: 0.8rem;
+   padding: 0.3rem;
 }
 .nav-bar a {
    text-decoration: none;

@@ -2,14 +2,15 @@
    display: flex;
    flex-direction: column;
    align-items: center;
+   color: white;
 }
 .added {
    display: flex;
-   flex-direction: column;
-   align-items: center;
+   flex-wrap: wrap;
+   max-width: 240px;
 }
 .added button {
-   width: 9rem;
+   width: 120px;
 }
 .form label {
    display: block;
@@ -45,6 +46,7 @@
    position: relative;
    transition: all 0.5s;
    z-index: 1;
+   margin-top: 1rem;
 }
 
 #send::before {

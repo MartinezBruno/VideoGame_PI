@@ -8,10 +8,12 @@ import './NavBar.css'
 function NavBar({ order, refresh }) {
    return (
       <div className="nav-bar">
-         <Link to="/videogame">Crear Videojuego</Link>
          <h1>Videogames SPA</h1>
          <div className="nav">
             <SearchBar />
+            <button>
+               <Link to="/videogame">Crear Videojuego</Link>
+            </button>
             <button onClick={refresh} className="reload-button">
                Reload Page
             </button>

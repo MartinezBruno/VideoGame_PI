@@ -26,7 +26,7 @@ export const getVideogames = () => dispatch => {
 export const searchGameByName = name => async dispatch => {
    try {
       const json = await axios.get(`/videogames?name=${name}`)
-      console.log(json.data)
+      // console.log(json.data)
       return dispatch({
          type: 'SEARCH_VIDEOGAME',
          payload: json.data,
@@ -49,19 +49,13 @@ export const getVideogameDetails = id => async dispatch => {
    }
 }
 
-export const getGenres = () => dispatch => {
-   // var json = await axios.get('/genres')
-   // console.log(json.data, 'genres')
-   // return dispatch({
-   //    type: 'GET_GENRES',
-   //    payload: json.data,
-   // })
-   axios
-      .get('/genres')
-      .then(res => {
-         return dispatch({ type: 'GET_GENRES', payload: res.data })
-      })
-      .catch(error => console.log(error))
+export const getGenres = () => async dispatch => {
+   var json = await axios.get('/genres')
+   console.log(json.data, 'genres')
+   return dispatch({
+      type: 'GET_GENRES',
+      payload: json.data,
+   })
 }
 
 export const filterByApiOrDb = payload => async dispatch => {

@@ -11,15 +11,10 @@ function LandingPage() {
       dispatch(getVideogames())
    }, [dispatch])
    return (
-      <>
-         <div className="landing-page">
-            <div className="landing-text">
-               <p>Welcome to my Videogame SPA</p>
-            </div>
-         </div>
+      <div className="landing-page">
          <div className="landing-button">
-            <Link to="/home">
-               <button className="cssbuttons-io-button">
+            <Link to="/home" style={{textDecoration:"none"}}>
+               <p className="cssbuttons-io-button">
                   Ir al inicio
                   <div className="icon">
                      <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -30,10 +25,10 @@ function LandingPage() {
                         ></path>
                      </svg>
                   </div>
-               </button>
+               </p>
             </Link>
          </div>
-      </>
+      </div>
    )
 }
 

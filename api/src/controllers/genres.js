@@ -1,9 +1,9 @@
 const axios = require('axios')
-const {Genre} = require('../db')
-const {API_KEY} = process.env
+const { Genre } = require('../db')
+const { API_KEY } = process.env
 const apiGenresUrl = `https://api.rawg.io/api/genres?key=${API_KEY}`
 
-const getGenres = async (req, res) => {
+const getGenres = async (req, res, next) => {
    try {
       let genresFromApi = await axios.get(apiGenresUrl)
       genresFromApi = genresFromApi.data.results
@@ -22,7 +22,7 @@ const getGenres = async (req, res) => {
       })
       res.json(genres)
    } catch (error) {
-      console.log(error)
+      next(error)
    }
 }
 

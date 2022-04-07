@@ -16,14 +16,15 @@
 .tarjeta {
    width: 650px;
    min-height: fit-content;
-   background: #fff;
+   background: #00000067;
+   color: white;
    padding: 20px;
    box-shadow: 0 20px 60px #049bffae;
    border-radius: 25px;
 }
 
 .container-detail .tarjeta-image {
-   width: 30%;
+   width: 47%;
 }
 
 .tarjeta-image img {

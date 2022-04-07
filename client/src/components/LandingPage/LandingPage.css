@@ -1,14 +1,17 @@
 .landing-page {
-   position: fixed;
-   top: 0;
-   width: 100vw;
-   height: 100vh;
+   width: 100%;
+   height: 100%;
    background-image: url('../Images/landingPage.jpg');
    background-size: cover;
    background-repeat: no-repeat;
    position: absolute;
-   background-position: center center;
    background-attachment: fixed;
+}
+@media screen and (max-width: 992px) {
+   .landing-page {
+      background-image: url(../Images/landingPage-mobile.png);
+      background-position: center;
+   }
 }
 
 .landing-button {
@@ -18,26 +21,8 @@
    justify-content: center;
    margin-top: 85vh;
 }
-
-.landing-text {
-   color: #a370f0;
-   -webkit-text-stroke: 2px black;
-   font-weight: bold;
-   font-size: 70px;
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   position: relative;
-   top: 0;
-}
-@media only screen and (min-width: 768px) {
-   landing-text {
-      font-size: 30px;
-   }
-}
-
 .cssbuttons-io-button {
-   background: #a370f0;
+   background: #ce1e66;
    color: white;
    font-family: inherit;
    padding: 0.35em;
@@ -55,7 +40,6 @@
    position: relative;
    height: 2.8em;
    padding-right: 3.3em;
-   text-decoration: none;
 }
 
 .cssbuttons-io-button .icon {

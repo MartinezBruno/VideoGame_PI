@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {searchGameByName} from '../../actions/'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { searchGameByName } from '../../actions/'
+import './SearchBar.css'
 
 function SearchBar() {
    const dispatch = useDispatch()
@@ -23,8 +24,8 @@ function SearchBar() {
             <input
                type="text"
                placeholder="Search a videogame..."
-               value={videogame}
                onChange={e => handleInputChange(e)}
+               value={videogame}
             />
             <button type="submit">Search</button>
          </form>

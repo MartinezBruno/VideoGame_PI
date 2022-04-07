@@ -38,9 +38,6 @@ function rootReducer(state = initialState, { type, payload }) {
       case 'POST_VIDEOGAME':
          return {
             ...state,
-            allVideogames: payload,
-            videogames: [],
-            loader: false,
          }
       case 'GET_GENRES':
          return {
@@ -60,7 +57,7 @@ function rootReducer(state = initialState, { type, payload }) {
                : allVideogames.filter(game => typeof game.id === 'number')
          return {
             ...state,
-            videogames: payload === 'all' ? state.allVideogames : filteredVideogames,
+            videogames: payload === 'all' ? allVideogames : filteredVideogames,
          }
       case 'ORDER':
          let orderedGames
@@ -97,10 +94,9 @@ function rootReducer(state = initialState, { type, payload }) {
          const dbFilter = allGames.filter(game => game.genres.find(g => (g.name === payload ? game : null)))
          // console.log(dbFilter)
          const apiFilter = allGames.filter(game => game.genres.includes(payload))
-         const filteredGames = payload === 'All' ? allGames : apiFilter.concat(dbFilter)
          return {
             ...state,
-            videogames: filteredGames,
+            videogames: payload === 'All' ? allGames : apiFilter.concat(dbFilter),
          }
       case 'LOADING': {
          return {

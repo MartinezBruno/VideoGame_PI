@@ -32,7 +32,7 @@ function Detail() {
                         <div className="tarjeta-image">
                            <img
                               src={gameDetail.image ? gameDetail.image : image}
-                              alt="img not found"
+                              alt={gameDetail.image ? gameDetail.name : 'Not found'}
                               width="400px"
                               heigth="290px"
                            />

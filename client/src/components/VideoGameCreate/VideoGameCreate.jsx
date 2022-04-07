@@ -12,7 +12,7 @@ const validation = input => {
    if (input.rating > 5) errors.rating = 'Rating must be less than 5'
    if (input.rating < 0) errors.rating = 'Rating must be greater than 0'
    if (input.platforms.length === 0) errors.platforms = 'Platforms is required'
-   if (!input.genres.length === 0) errors.genres = 'Genres is required'
+   if (input.genres.length === 0) errors.genres = 'Genres is required'
 
    return errors
 }
@@ -38,13 +38,14 @@ function VideoGameCreate() {
    }
    const handleRemovePlatform = e => {
       e.preventDefault()
-      console.log(e.target)
       setInput({
          ...input,
          platforms: input.platforms.filter(p => p !== e.target.name),
       })
    }
    const handleAddGenre = e => {
+      if (input.genres.includes(e.target.value)) return
+
       setInput({
          ...input,
          genres: [...input.genres, e.target.value],

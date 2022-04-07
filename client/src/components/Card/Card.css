@@ -1,7 +1,7 @@
 .card {
-   width: 20rem;
+   width: 17rem;
    min-height: auto;
-   background-color: #212121;
+   background-color: #212121c5;
    border-radius: 1rem;
    border: #212121 0.2rem solid;
    -webkit-transition: all 0.4s ease-in;

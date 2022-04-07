@@ -18,6 +18,7 @@ function Home() {
    const indexOfFirstGame = indexOfLastGame - gamesPerPage //0 (Seteo indice del primer videojuego)
 
    const currentGames = allVideoGames.slice(indexOfFirstGame, indexOfLastGame) //Seteo los videojuegos que se van a mostrar
+   
 
    // console.log(currentGames)
    const paged = pageNumber => {
