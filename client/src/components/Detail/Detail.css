@@ -30,10 +30,16 @@
 .tarjeta-image img {
    width: 100%;
 }
-.tarjeta-text h3 {
+.tarjeta-text h2 {
    text-align: right;
 }
 
 .descrpiton {
    text-align: left;
+}
+
+@media screen and (max-width: 425px) {
+   .tarjeta-text h2 {
+      text-align: center;
+   }
 }

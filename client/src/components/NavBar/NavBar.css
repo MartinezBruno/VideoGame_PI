@@ -36,7 +36,8 @@
       font-size: 3rem;
    }
    .searchBar,
-   .nav-bar .select {
+   .nav-bar .api-db,
+   .create-button {
       margin: 1rem 0;
    }
    .reload-button {

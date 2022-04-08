@@ -38,7 +38,7 @@ function Detail() {
                            />
                         </div>
                         <div className="tarjeta-text">
-                           <h3>{gameDetail.name}</h3>
+                           <h2>{gameDetail.name}</h2>
                            <p>
                               Genres:
                               {gameDetail.createdOnDb
@@ -48,7 +48,7 @@ function Detail() {
                            <h4 className="sub-title">Description:</h4>
                            {<p className="descrpiton" dangerouslySetInnerHTML={{ __html: gameDetail.description }} />}
                            <p>Released: {gameDetail.released}</p>
-                           <p>Rating: {gameDetail.rating}</p>
+                           <p>Rating: {gameDetail.rating}/5</p>
                            <p>
                               Platforms:
                               {gameDetail.platforms.map((plat, index) => (

@@ -11,12 +11,6 @@ function NavBar({ order, refresh }) {
          <h1>Videogames SPA</h1>
          <div className="nav">
             <SearchBar />
-            <button>
-               <Link to="/videogame">Crear Videojuego</Link>
-            </button>
-            <button onClick={refresh} className="reload-button">
-               Reload Page
-            </button>
             <FilterGenres />
             <FilterAPIorDB />
             <select defaultValue={''} onChange={order} className="select">
@@ -28,6 +22,12 @@ function NavBar({ order, refresh }) {
                <option value="ascR">Rating +</option>
                <option value="descR">Rating -</option>
             </select>
+            <button className="create-button">
+               <Link to="/videogame">Crear Videojuego</Link>
+            </button>
+            <button onClick={refresh} className="reload-button">
+               Reload Page
+            </button>
          </div>
       </div>
    )

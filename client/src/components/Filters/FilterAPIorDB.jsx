@@ -1,6 +1,6 @@
 import React from 'react'
-import {useDispatch} from 'react-redux'
-import {filterByApiOrDb} from '../../actions'
+import { useDispatch } from 'react-redux'
+import { filterByApiOrDb } from '../../actions'
 
 function FilterAPIorDB() {
    const dispatch = useDispatch()
@@ -8,7 +8,7 @@ function FilterAPIorDB() {
       dispatch(filterByApiOrDb(e.target.value))
    }
    return (
-      <div className="select">
+      <div className="select api-db">
          <select defaultValue={''} onChange={e => handleChange(e)}>
             <option value="" disabled>
                Filter by DB/API
