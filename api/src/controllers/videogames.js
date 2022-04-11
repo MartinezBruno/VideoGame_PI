@@ -13,14 +13,13 @@ const getAll = async (req, res, next) => {
          const dbGames = await Videogame.findAll({
             where: {
                name: {
-                  [Op.like]: `%${name}%`,
+                  [Op.iLike]: `%${name}%`,
                },
             },
             include: {
                model: Genre,
             },
          })
-
          let dbResponse = dbGames.map(v => {
             return {
                id: v.id,
@@ -29,7 +28,8 @@ const getAll = async (req, res, next) => {
                released: v.released,
                rating: v.rating,
                platforms: v.platforms,
-               genres: v.genres.map(g => g.name),
+               genres: v.genres,
+               createdOnDb: v.createdOnDb,
             }
          })
 
@@ -116,7 +116,7 @@ const postVideogame = async (req, res, next) => {
          platforms,
       })
       let dbGenre = await Genre.findAll({ where: { name: genres } })
-      newVideoGame.addGenre(dbGenre)
+      newVideoGame.addGenres(dbGenre)
       // res.send({msg: 'Videogame created'})
       res.status(201).send(newVideoGame)
    } catch (error) {

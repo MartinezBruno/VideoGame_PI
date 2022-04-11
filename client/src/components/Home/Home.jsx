@@ -40,14 +40,14 @@ function Home() {
       dispatch(getGenres())
       dispatch(LoaderToTrue())
       setCurrentPage(1)
-      console.log('Recargando pagina mi rey')
+      // console.log('Recargando pagina mi rey')
    }
 
    useEffect(
       () => {
          dispatch(getVideogames()) //Ejecuto la accion
          dispatch(getGenres())
-         console.log('Ejecutando useEffect')
+         // console.log('Ejecutando useEffect')
          return () => {
             dispatch(LoaderToTrue())
          }

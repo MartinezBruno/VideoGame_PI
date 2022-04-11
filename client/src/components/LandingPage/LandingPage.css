@@ -21,7 +21,7 @@
    justify-content: center;
    margin-top: 85vh;
 }
-.cssbuttons-io-button {
+.button {
    background: #ce1e66;
    color: white;
    font-family: inherit;
@@ -42,7 +42,7 @@
    padding-right: 3.3em;
 }
 
-.cssbuttons-io-button .icon {
+.button .icon {
    background: white;
    margin-left: 1em;
    position: absolute;
@@ -57,20 +57,20 @@
    transition: all 0.3s;
 }
 
-.cssbuttons-io-button:hover .icon {
+.button:hover .icon {
    width: calc(100% - 0.6em);
 }
 
-.cssbuttons-io-button .icon svg {
+.button .icon svg {
    width: 1.1em;
    transition: transform 0.3s;
    color: #7b52b9;
 }
 
-.cssbuttons-io-button:hover .icon svg {
+.button:hover .icon svg {
    transform: translateX(0.1em);
 }
 
-.cssbuttons-io-button:active .icon {
+.button:active .icon {
    transform: scale(0.95);
 }

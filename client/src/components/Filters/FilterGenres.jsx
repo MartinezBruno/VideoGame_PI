@@ -3,16 +3,17 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useState} from 'react'
 import {filterByGenre} from '../../actions'
 
-function FilterGenres() {
+function FilterGenres({setCurrentPage}) {
    const dispatch = useDispatch()
    const genres = useSelector(state => state.genres)
-   const [, setCurrentPage] = useState(1)
    const [, setFilterByGenre] = useState('')
+
+
 
    const handleGenre = e => {
       e.preventDefault()
-      dispatch(filterByGenre(e.target.value))
       setCurrentPage(1)
+      dispatch(filterByGenre(e.target.value))
       setFilterByGenre('FilterByGenre' + e.target.value)
    }
    return (

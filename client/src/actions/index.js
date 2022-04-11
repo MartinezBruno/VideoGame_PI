@@ -1,18 +1,6 @@
 import axios from 'axios'
 
 export const getVideogames = () => dispatch => {
-   // try {
-   //    dispatch({type: 'LOADING', payload: 'Searching games'})
-   //    var json = await axios.get('/videogames')
-   //    // console.log(json, 'videogames')
-   //    return dispatch({
-   //       type: 'GET_VIDEOGAMES',
-   //       payload: json.data,
-   //    })
-   // } catch (error) {
-   //    console.log(error)
-   // }
-
    axios
       .get('/videogames')
       .then(json => {
@@ -26,7 +14,7 @@ export const getVideogames = () => dispatch => {
 export const searchGameByName = name => async dispatch => {
    try {
       const json = await axios.get(`/videogames?name=${name}`)
-      // console.log(json.data)
+      console.log(json.data)
       return dispatch({
          type: 'SEARCH_VIDEOGAME',
          payload: json.data,
@@ -51,7 +39,7 @@ export const getVideogameDetails = id => async dispatch => {
 
 export const getGenres = () => async dispatch => {
    var json = await axios.get('/genres')
-   console.log(json.data, 'genres')
+   // console.log(json.data, 'genres')
    return dispatch({
       type: 'GET_GENRES',
       payload: json.data,
@@ -108,7 +96,7 @@ export const getPlatforms = () => async dispatch => {
       let games = (await axios.get('/videogames')).data
       let allPlatforms = games.map(p => p.platforms)
       let platforms = [...new Set(allPlatforms.flat())]
-      console.log(platforms, 'platforms')
+      // console.log(platforms, 'platforms')
       return dispatch({
          type: 'GET_PLATFORMS',
          payload: platforms,
