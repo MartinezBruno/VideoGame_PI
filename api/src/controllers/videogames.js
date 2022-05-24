@@ -29,6 +29,7 @@ const getAll = async (req, res, next) => {
                rating: v.rating,
                platforms: v.platforms,
                genres: v.genres,
+               image: v.image,
                createdOnDb: v.createdOnDb,
             }
          })
@@ -52,7 +53,7 @@ const getAll = async (req, res, next) => {
       } else {
          try {
             const allGames = await getAllGames()
-            res.json(allGames)
+            res.status(200).send(allGames)
          } catch (error) {
             next(error)
          }
@@ -95,9 +96,10 @@ const getById = async (req, res, next) => {
             released: dbResponse.released,
             rating: dbResponse.rating,
             platforms: dbResponse.platforms,
+            image: dbResponse.image,
             genres: dbResponse.genres.map(g => g.name),
          }
-         res.status(200).json(idGame)
+         res.status(200).send(idGame)
       } catch (error) {
          res.status(404).send({ msg: 'ID Game not found' })
          next(error)
@@ -107,11 +109,12 @@ const getById = async (req, res, next) => {
 
 const postVideogame = async (req, res, next) => {
    try {
-      const { name, description, released, rating, platforms, genres } = req.body
+      const { name, description, released, rating, platforms, genres, image } = req.body
       const newVideoGame = await Videogame.create({
          name,
          description,
          released,
+         image,
          rating,
          platforms,
       })

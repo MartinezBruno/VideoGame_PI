@@ -5,14 +5,14 @@ import FilterGenres from '../Filters/FilterGenres'
 import SearchBar from '../SearchBar/SearchBar'
 import './NavBar.css'
 
-function NavBar({ order, refresh, setCurrentPage }) {
+function NavBar({ order, refresh, paged }) {
    return (
       <div className="nav-bar">
          <h1>Videogames SPA</h1>
          <div className="nav">
             <SearchBar />
-            <FilterGenres setCurrentPage={setCurrentPage}/>
-            <FilterAPIorDB setCurrentPage={setCurrentPage}/>
+            <FilterGenres paged={paged}/>
+            <FilterAPIorDB paged={paged}/>
             <select defaultValue={''} onChange={order} className="select">
                <option value="" disabled>
                   Order By:

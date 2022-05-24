@@ -9,8 +9,8 @@ import './Detail.css'
 function Detail() {
    const { id } = useParams()
    const dispatch = useDispatch()
+   const gameDetail = useSelector(state => state.videogameDetail)
    const loader = useSelector(state => state.loading)
-
    useEffect(() => {
       dispatch(getVideogameDetails(id))
       return () => {
@@ -18,7 +18,6 @@ function Detail() {
       }
    }, [dispatch, id])
 
-   const gameDetail = useSelector(state => state.videogameDetail)
 
    return (
       <div className="container">

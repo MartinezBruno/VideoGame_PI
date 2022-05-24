@@ -2,11 +2,12 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { filterByApiOrDb } from '../../actions'
 
-function FilterAPIorDB({setCurrentPage}) {
+function FilterAPIorDB({paged}) {
    const dispatch = useDispatch()
    const handleChange = e => {
+      e.preventDefault()
       dispatch(filterByApiOrDb(e.target.value))
-      setCurrentPage(1)
+      paged(1)
    }
    return (
       <div className="select api-db">

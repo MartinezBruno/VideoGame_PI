@@ -20,7 +20,7 @@ const getGenres = async (req, res, next) => {
             },
          })
       })
-      res.json(genres)
+      res.status(200).send(genres)
    } catch (error) {
       next(error)
    }

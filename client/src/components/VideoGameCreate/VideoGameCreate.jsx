@@ -42,10 +42,10 @@ function VideoGameCreate() {
          ...input,
          platforms: input.platforms.filter(p => p !== e.target.name),
       })
+      setErrors(validation({ ...input }))
    }
    const handleAddGenre = e => {
       if (input.genres.includes(e.target.value)) return
-
       setInput({
          ...input,
          genres: [...input.genres, e.target.value],
@@ -80,6 +80,7 @@ function VideoGameCreate() {
          description: '',
          released: '',
          rating: '',
+         image: "",
          genres: [],
          platforms: [],
       })
@@ -118,6 +119,10 @@ function VideoGameCreate() {
                   autoComplete="off"
                />
                {errors.name && <p className="error">{errors.name}</p>}
+            </div>
+            <div>
+               <label htmlFor="image">Image:</label>
+               <input type="text" name="image" value={input.image} onChange={handleOnChange}/>
             </div>
             <div>
                <label htmlFor="rating" className="label-form">

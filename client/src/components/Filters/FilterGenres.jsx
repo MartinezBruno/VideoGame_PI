@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useState} from 'react'
 import {filterByGenre} from '../../actions'
 
-function FilterGenres({setCurrentPage}) {
+function FilterGenres({paged}) {
    const dispatch = useDispatch()
    const genres = useSelector(state => state.genres)
    const [, setFilterByGenre] = useState('')
@@ -12,7 +12,7 @@ function FilterGenres({setCurrentPage}) {
 
    const handleGenre = e => {
       e.preventDefault()
-      setCurrentPage(1)
+      paged(1)
       dispatch(filterByGenre(e.target.value))
       setFilterByGenre('FilterByGenre' + e.target.value)
    }
@@ -26,7 +26,7 @@ function FilterGenres({setCurrentPage}) {
             {genres
                ?.sort((a, b) => {
                   if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-                  if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+                  if (a.name.toLowerCase() > b.name.toLowerCase()) return 1 // sort b before a
                   return 0
                })
                .map(genre => {

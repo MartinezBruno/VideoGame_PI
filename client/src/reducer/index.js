@@ -58,9 +58,9 @@ function rootReducer(state = initialState, { type, payload }) {
          let orderedGames
          if (payload === 'descA') {
             orderedGames = state.videogames.sort((a, b) => {
-               if (a.name.toLowerCase() < b.name.toLowerCase()) return 1
-               if (a.name.toLowerCase() > b.name.toLowerCase()) return -1
-               return 0
+               if (a.name.toLowerCase() < b.name.toLowerCase()) return 1   // a comes first
+               if (a.name.toLowerCase() > b.name.toLowerCase()) return -1  // b comes first
+               return 0                                                    // a and b are equal
             })
          }
          if (payload === 'ascA') {

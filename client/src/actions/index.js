@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export const getVideogames = () => dispatch => {
-   axios
-      .get('/videogames')
+  axios
+  .get('/videogames')
       .then(json => {
          return dispatch({ type: 'GET_VIDEOGAMES', payload: json.data })
       })
@@ -14,7 +14,7 @@ export const getVideogames = () => dispatch => {
 export const searchGameByName = name => async dispatch => {
    try {
       const json = await axios.get(`/videogames?name=${name}`)
-      console.log(json.data)
+      // console.log(json.data)
       return dispatch({
          type: 'SEARCH_VIDEOGAME',
          payload: json.data,
